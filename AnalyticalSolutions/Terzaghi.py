@@ -11,11 +11,7 @@ import math
 
 # CLASS DEFINITION ==============================================================================
 
-class TerzaghisProblemAnalytical( object ):
-    
-    # Constructor ---------------------------------------------------------------------------
-    
-        
+class Terzaghi( object ):
     def __init__( self, height, tao_0, rock, fluid ):
         self.height = height;
         self.tao_0 = tao_0;
@@ -284,65 +280,6 @@ class TerzaghisProblemAnalytical( object ):
 
 
 
-#def ReadAlongTime( fileName ):
-#    f = open( fileName )
-#    print f.next()
-#    print f.next()
-#    print f.next()
-#    time = []
-#    scalar = []
-#    while 1:
-#        try:
-#            aux = f.next().split(',')
-#            time.append( float( aux[0] ) )
-#            scalar.append( float( aux[1].split('\n')[0] ) )
-#        except:
-#            return time, scalar
-#            break
-
-def Reordenar( y, listOfListOfValues ):
-    ct = 0
-    while 1:
-        ct += 1
-        resp = 1
-        for i in range( len(y)-1 ):
-            if y[i] > y[i+1]:
-                y_i = y[i]
-                y[i] = y[i+1]
-                y[i+1] = y_i
-                for listOfValues in listOfListOfValues:
-                    listOfValues_i = listOfValues[i]
-                    listOfValues[i] = listOfValues[i+1]
-                    listOfValues[i+1] = listOfValues_i
-                resp = 0                
-        if resp == 1:
-                break
-    return y, listOfListOfValues
-                
-        
-def ReadAlongColumn( fileName ):
-    f = open( fileName )
-    y, t, v = [], [], []
-    f.next()
-    line = f.next().split(',')
-    for i in line[:-1]:
-        y.append( float( i ) )
-    f.next()
-    f.next()
-    while 1:
-        try:
-            line = f.next().split(',')
-            t.append( float( line[0] ) )
-            aux = []
-            for i in line[1:-1]:
-                aux.append( float(i) )
-            v.append( aux )
-        except:
-            break
-    
-        
-    return y, t, v
-
 
 
 def pEqui( stress, height, c_f, c_s, phi, ni, G, alpha ):
@@ -362,17 +299,19 @@ def uEqui( stress, height, c_f, c_s, phi, ni, G, alpha ):
 
 if __name__ == '__main__':
     import pylab as pl
-    import sys    
-    sys.path.append('../PropertyParser')
+    import sys, os
+    os.chdir("..")
+    current_dir = os.getcwd()
+    sys.path.append(current_dir+'/PhysicalPropertyTools')
     from PropertyParser import Properties
     
 
     height = 6.0
     tao_0 = 1.0e+5
-    rock = Properties( "../PropertyParser/Json_Files/solid.json" )
-    fluid = Properties( "../PropertyParser/Json_Files/fluid.json" )
+    rock = Properties( current_dir + "/PhysicalPropertyTools/Json_Files/solid.json" )
+    fluid = Properties( current_dir + "/PhysicalPropertyTools/Json_Files/fluid.json" )
 
-    terza = TerzaghisProblemAnalytical( height, tao_0, rock, fluid )
+    terza = Terzaghi( height, tao_0, rock, fluid )
     z_a = terza.getPositionValues()
     p_a = terza.getPressureValuesConstTime(10000, 400)
     
