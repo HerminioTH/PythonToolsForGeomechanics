@@ -6,7 +6,7 @@ Created on Thu Nov 15 15:08:02 2018
 @author: herminio
 """
 
-from AnalyticalSolutions.Terzaghi import TerzaghisProblemAnalytical
+from AnalyticalSolutions import Terzaghi
 from PhysicalPropertyTools.PropertyParser import Properties
 from CGNSTools.CGNSReader import ReadCGNSFile
 import pylab as pl
@@ -18,9 +18,11 @@ time = 1.0
 
 height = 6.0
 tao_0 = 1.0e+5
+
 rock = Properties( "../PhysicalPropertyTools/Json_Files/solid.json" )
 fluid = Properties( "../PhysicalPropertyTools/Json_Files/fluid.json" )
-terza = TerzaghisProblemAnalytical( height, tao_0, rock, fluid )
+
+terza = Terzaghi.Solution( height, tao_0, rock, fluid )
 z_a = terza.getPositionValues()
 p_a = terza.getPressureValuesConstTime(time, 400)
 

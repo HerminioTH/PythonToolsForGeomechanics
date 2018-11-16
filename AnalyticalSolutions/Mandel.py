@@ -15,7 +15,7 @@ import math;
 
 # CLASS DEFINITION ==============================================================================
 
-class Mandel( object ):
+class Solution( object ):
     def __init__( self, lenght, height, Force, rock, fluid ):
         self.lenght = lenght;
         self.height = height;
@@ -393,7 +393,7 @@ if __name__ == '__main__':
     rock = Properties( current_dir + "/PhysicalPropertyTools/Json_Files/solid.json" )
     fluid = Properties( current_dir + "/PhysicalPropertyTools/Json_Files/fluid.json" )
     
-    mandel = Mandel( lenght, height, Force, rock, fluid )
+    mandel = Solution( lenght, height, Force, rock, fluid )
     x = mandel.getXPositionValues();
     y = mandel.getYPositionValues();
     

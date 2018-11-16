@@ -11,7 +11,7 @@ import math
 
 # CLASS DEFINITION ==============================================================================
 
-class Terzaghi( object ):
+class Solution( object ):
     def __init__( self, height, tao_0, rock, fluid ):
         self.height = height;
         self.tao_0 = tao_0;
@@ -311,7 +311,7 @@ if __name__ == '__main__':
     rock = Properties( current_dir + "/PhysicalPropertyTools/Json_Files/solid.json" )
     fluid = Properties( current_dir + "/PhysicalPropertyTools/Json_Files/fluid.json" )
 
-    terza = Terzaghi( height, tao_0, rock, fluid )
+    terza = Solution( height, tao_0, rock, fluid )
     z_a = terza.getPositionValues()
     p_a = terza.getPressureValuesConstTime(10000, 400)
     
