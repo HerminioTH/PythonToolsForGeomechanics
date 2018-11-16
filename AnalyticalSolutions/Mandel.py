@@ -394,10 +394,15 @@ if __name__ == '__main__':
     fluid = Properties( current_dir + "/PhysicalPropertyTools/Json_Files/fluid.json" )
     
     mandel = Mandel( lenght, height, Force, rock, fluid )
-    AxisX = mandel.getXPositionValues();
-    AxisY = mandel.getYPositionValues();
-    AxisXNormalized = mandel.getXPositionValuesNormalized();
-    AxisYNormalized = mandel.getYPositionValuesNormalized();
+    x = mandel.getXPositionValues();
+    y = mandel.getYPositionValues();
+    
+    time = 5000.
+    p = mandel.getPressureValuesConstTime(time, x)
+    
+    pl.plot(x, p)
+    pl.grid(True)
+    pl.show()
 
 
 
