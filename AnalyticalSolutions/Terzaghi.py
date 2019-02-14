@@ -127,12 +127,17 @@ class Solution( object ):
 
 
 
+
+    def getPositionValues(self, n=200, axisName=None):
+        return self.getPositionValues(n)
+
+
     def getPositionValues( self, ny = 200 ):
         dy = self.height / ( ny - 1.0 );
         positionValues = [];
         for i in range( 0, ny ):
             positionValues.append( i * dy );
-        return positionValues;
+        return np.array(positionValues)
 
 
     def getPositionValuesNormalized( self, ny = 200 ):
@@ -198,7 +203,7 @@ class Solution( object ):
         for i in range( 0, size ):
             pressureValue = self.getPressureValue( positionValues[ i ], time, numberOfSummationTerms );
             pressureValues.append( pressureValue );
-        return pressureValues;
+        return np.array(pressureValues)
 
     def getPressureValuesNormalizedConstTime( self, time, numberOfSummationTerms = 200, ny = 200 ): # p / p_0
         pressureValues = self.getPressureValuesConstTime( time, numberOfSummationTerms, ny );

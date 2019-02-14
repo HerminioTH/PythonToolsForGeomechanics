@@ -156,12 +156,21 @@ class Solution( object ):
 
 
     # Class interface -----------------------------------------------------------------------
+    def getPositionValues(self, n=200, axisName='X'):
+        if axisName == 'X':
+            return self.getXPositionValues(n)
+        elif axisName == 'Y':
+            return self.getYPositionValues(n)
+        else:
+            print('Invalid axisName. Only X or Y axisName are allowed.')
+        
+    
     def getXPositionValues( self, nx = 200 ):
         dx = self.lenght / ( nx - 1.0 );
         positionValues = [ ];
         for i in range( 0, nx ):
             positionValues.append( i * dx );        
-        return positionValues;
+        return np.array(positionValues)
 
 
     def getXPositionValuesNormalized( self, nx = 200 ):
@@ -177,7 +186,7 @@ class Solution( object ):
         positionValues = [ ];
         for i in range( 0, ny ):
             positionValues.append( i * dy );
-        return positionValues;
+        return np.array(positionValues)
 
 
     def getYPositionValuesNormalized( self, ny = 200 ):
@@ -271,7 +280,7 @@ class Solution( object ):
         for i in range( 0, size ):
             pressureValue = self.getPressureValue( positionValues[ i ], time, numberOfSummationTerms, roots );
             pressureValues.append( pressureValue );
-        return pressureValues;
+        return np.array(pressureValues);
 
 
     def getPressureValuesNormalizedConstTime( self, time, nx = 200, numberOfSummationTerms = 200 ):

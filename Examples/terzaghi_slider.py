@@ -68,9 +68,8 @@ plt.subplots_adjust(left=0.08, right=0.97, bottom=0.25)
 
 
 line_p_List = []
-pMin, pMax = 0., 0.
 p_a = np.array(terza.getPressureValuesConstTime( g.time[1], 400, z_a ))
-line, = ax1.plot( p_a, z_a, '-', color='black', label='Analytic Solution', linewidth=2.0 )
+line, = ax1.plot( p_a, z_a, '-', color='black', label='Analytical Solution', linewidth=2.0 )
 line_p_List.append( line )
 
 line, = ax1.plot( p_n, z_n, 'o-', label='Numerical Solution', linewidth=2.0 )
@@ -85,19 +84,18 @@ ax1.set_ylabel( 'z (m)', size=14 )
 axcolor = 'lightgoldenrodyellow'
 axTime = plt.axes([0.25, 0.1, 0.65, 0.03])
 
-sTime = Slider(axTime, 'Freq', g.time[0], g.time[-1], valinit=g.time[0])
+sTime = Slider(axTime, 'Time', g.time[0], g.time[-1], valinit=g.time[0])
 
 
 
 def update(val):
-#    global g.time
     stime = findCloser( sTime.val, g.time )
     p_a = np.array(terza.getPressureValuesConstTime( stime, 400, z_a ))
     line_p_List[0].set_xdata( p_a )
     line_p_List[0].set_ydata( z_a )
     try:
-        g.loadPointsOfInterest(func)
-        g.sortPointsOfInterest(3)
+#        g.loadPointsOfInterest(func)
+#        g.sortPointsOfInterest(3)
         z_n = g.getCoordinateZ()
         p_n = g.getFieldValuesAtTime('Pressure', stime)
         line_p_List[1].set_xdata( p_n )
