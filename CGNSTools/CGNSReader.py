@@ -127,6 +127,10 @@ class ReadCGNSFile2(object):
         self.zone = self.base.get('ZONE')
 
         self.__buildTimeStepDictionary()
+        
+    def __del__(self):
+        subprocess.call(["sh", "-c", "cgnsconvert -a " + self.fileName], stdout=open(os.devnull, "wb"))
+
 
 
     def getTimeStepName( self, timeInstant ):
@@ -209,7 +213,7 @@ def getTol( x, y, tol=1e-5 ):
 if __name__ == '__main__':
     import pylab as pl
 
-    g = ReadCGNSFile2( "Results/ResultsTERZA.cgns" )
+    g = ReadCGNSFile2( "Results/Results_2682v_10266e.cgns" )
 
     def fun(x,y,z):
         if getTol(x, 0) and getTol(y, 0):
@@ -222,7 +226,7 @@ if __name__ == '__main__':
     p_n = g.getFieldValuesAtTime('Pressure', 400)
     z_n = g.getCoordinateZ()
 
-
+    del g
 
     pl.plot( p_n, z_n, 'r.-' )
     pl.grid(True)
