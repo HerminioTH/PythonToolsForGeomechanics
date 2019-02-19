@@ -11,7 +11,7 @@ setup(
 	author_email = "herminio.eng@gmail.com",
 	description = ("This package is intended to support and manage results generated from geomechanical problems."),
 	license = "BSD",
-	packages = ["AnalyticalSolutions", "Examples", "CGNSTools", "PhysicalPropertyTools"],
+	packages = ["AnalyticalSolutions", "Examples", "CGNSTools", "PhysicalPropertyTools", "PlotTools"],
 	package_data = {"CGNSTools" : ["Results/Results.cgns"],
 					"PhysicalPropertyTools" : ["Json_Files/solid.json", "Json_Files/fluid.json"]},
 	long_description = read("README.txt"),

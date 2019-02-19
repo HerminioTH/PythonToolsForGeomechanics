@@ -9,6 +9,8 @@ Created on Thu Nov 15 15:32:34 2018
 from AnalyticalSolutions import Terzaghi
 from PhysicalPropertyTools.PropertyParser import Properties
 from CGNSTools.CGNSReader import ReadCGNSFile
+from PlotTools.PlotTools import *
+
 
 
 

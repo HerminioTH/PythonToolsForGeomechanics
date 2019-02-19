@@ -36,7 +36,7 @@ class ReadCGNSFile(object):
     def getFieldValuesAtTime( self, fieldName, time ):
         timeStepName = self.getTimeStepName(time)
         return self.__getValuesAtIndexes(
-                self.project.get(timeStepName).get(fieldName).get(' data').value,
+                self.project.get(timeStepName).get(fieldName).get(' data')[()],
                 self.indexes)
 
     def getCoordinateX(self):
@@ -52,9 +52,9 @@ class ReadCGNSFile(object):
     def loadPointsOfInterest(self, funcCondition=None):
         self.indexes = []
         self.coords = []
-        X = self.base.get("project1").get("GridCoordinates").get("CoordinateX").get(' data').value
-        Y = self.base.get("project1").get("GridCoordinates").get("CoordinateY").get(' data').value
-        Z = self.base.get("project1").get("GridCoordinates").get("CoordinateZ").get(' data').value
+        X = self.base.get("project1").get("GridCoordinates").get("CoordinateX").get(' data')[()]
+        Y = self.base.get("project1").get("GridCoordinates").get("CoordinateY").get(' data')[()]
+        Z = self.base.get("project1").get("GridCoordinates").get("CoordinateZ").get(' data')[()]
         if funcCondition != None:
             for x, y, z, i in zip(X, Y, Z, range(X.size)):
                 if funcCondition(x, y, z):
@@ -101,20 +101,6 @@ class ReadCGNSFile(object):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class ReadCGNSFile2(object):
     def __init__(self, fileName, gf_info=True, should_round=8):
         self.fileName = fileName
@@ -127,22 +113,21 @@ class ReadCGNSFile2(object):
         self.zone = self.base.get('ZONE')
 
         self.__buildTimeStepDictionary()
-        
-    def __del__(self):
-        subprocess.call(["sh", "-c", "cgnsconvert -a " + self.fileName], stdout=open(os.devnull, "wb"))
-
 
 
     def getTimeStepName( self, timeInstant ):
         try:
             return self.timeStepDict[timeInstant]
-        except KeyError:
+        except:
+            pass
             print( timeInstant )
             print( 'Invalid time step.' )
 
     def getFieldValuesAtTime( self, fieldName, time ):
         timeStepName = self.getTimeStepName(time)
-        return self.__getValuesAtIndexes(self.zone.get(timeStepName).get(fieldName).get(' data')[()], self.indexes)
+        return self.__getValuesAtIndexes(
+                self.zone.get(timeStepName).get(fieldName).get(' data')[()],
+                self.indexes)
 
     def getCoordinateX(self):
         return self.coords[:,0]
@@ -196,7 +181,7 @@ class ReadCGNSFile2(object):
         return aux
 
     def __buildTimeStepDictionary(self):
-        self.time = self.base.get("TimeIterativeValues").get("TimeValues").get(" data")[()]
+        self.time = self.base.get("TimeIterativeValues").get("TimeValues").get(" data").value
         ct = 0
         self.timeStepDict = {}
         for timeStep in self.zone.keys():
@@ -213,7 +198,7 @@ def getTol( x, y, tol=1e-5 ):
 if __name__ == '__main__':
     import pylab as pl
 
-    g = ReadCGNSFile2( "Results/Results_2682v_10266e.cgns" )
+    g = ReadCGNSFile( "Results/Results.cgns" )
 
     def fun(x,y,z):
         if getTol(x, 0) and getTol(y, 0):
@@ -223,10 +208,10 @@ if __name__ == '__main__':
 
     g.loadPointsOfInterest(fun)
     g.sortPointsOfInterest(3)
-    p_n = g.getFieldValuesAtTime('Pressure', 400)
+    p_n = g.getFieldValuesAtTime('Pressure', 0.5)
     z_n = g.getCoordinateZ()
 
-    del g
+
 
     pl.plot( p_n, z_n, 'r.-' )
     pl.grid(True)
